@@ -5,7 +5,7 @@ import java.util.Scanner;
 /**
  * Created by vampa on 12.01.2016.
  */
-public class Deck {
+public class Main {
     public static void main(String[] args) {
         Scanner cin = new Scanner(System.in);
         int n = cin.nextInt();
@@ -30,6 +30,9 @@ public class Deck {
                     if (popBack() != inputValue)
                         expectation = false;
             }
+            for (int j = 0; j < array.length; j++)
+                System.out.print("" + array[j] + " ");
+            System.out.println(expectation);
         }
         if (expectation)
             System.out.println("YES");
@@ -38,56 +41,64 @@ public class Deck {
     }
 
     private static int[] array = new int[4];
-    private static int front = 0;
-    private static int back = 0;
+    private static int head = 0; // Показывает позицию элемента в начале дека
+    private static int tail = 1; // Показывает позицию элемента в конце дека
 
     private static int popBack() {
-        if (front == back)
+        if ((head + 1) % array.length == tail)
             return -1;
-        if (back == array.length - 1)
-            back = 0;
-        else
-            back++;
-        return array[back];
+
+        if (tail == array.length - 1) {
+            tail = 0;
+            return array[array.length - 1];
+        } else
+            return array[tail++];
     }
 
     private static int popFront() {
-        if (front == back)
+        if ((head + 1) % array.length == tail)
             return -1;
-        if (front == 0) {
-            front = array.length - 1;
+
+        if (head == 0) {
+            head = array.length - 1;
             return array[0];
         } else
-            return array[front--];
+            return array[head--];
     }
 
     private static void pushBack(int value) {
-        if ((front + 2) % array.length == back)
+        if ((head + 2) % array.length == tail)
             increaseArray();
-        if (back == 0) {
-            back = array.length - 1;
-            array[0] = value;
-        } else
-            array[back--] = value;
+
+        if (tail == 0)
+            tail = array.length - 1;
+        else
+            tail--;
+
+        array[tail] = value;
     }
 
     private static void pushFront(int value) {
-        if ((front + 2) % array.length == back)
+        if ((head + 2) % array.length == tail)
             increaseArray();
-        if (front == array.length - 1)
-            front = 0;
+
+        if (head == array.length - 1)
+            head = 0;
         else
-            front++;
-        array[front] = value;
+            head++;
+
+        array[head] = value;
     }
 
     private static void increaseArray() {
         int[] increased = new int[array.length*2];
-        if (front < back) {
-            System.arraycopy(array, 0, increased, 0, front);
-            System.arraycopy(array, back, increased, back + array.length, array.length - back);
-        }
-        System.arraycopy(array, 0, increased, 0, array.length);
+        if (head < tail) {
+            int incTail = tail + array.length;
+            System.arraycopy(array, 0, increased, 0, head + 1);
+            System.arraycopy(array, tail, increased, incTail, array.length - tail);
+            tail = incTail;
+        } else
+            System.arraycopy(array, tail, increased, tail, head - tail + 1);
         array = increased;
     }
 }
