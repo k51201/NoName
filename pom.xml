@@ -9,11 +9,6 @@
     <version>0.1</version>
 
     <dependencies>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
-            <version>9.3.0.M1</version>
-        </dependency>
     </dependencies>
 
 </project>
