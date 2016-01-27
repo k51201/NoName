@@ -28,11 +28,6 @@ public class Main {
                 int fruit = fruitBasket.next();
                 hands[fruitsInHands++] = fruit;
                 gramsInHands += fruit;
-                /**/
-                for (int i = 0; i < hands.length; i++)
-                    System.out.print(" " + hands[i]);
-                System.out.println();
-                /**/
             }
             //хаваем фрукты
             for (int i = 0; i < fruitsInHands; i++)
