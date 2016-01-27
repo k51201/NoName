@@ -64,8 +64,8 @@ public class Main {
             return res;
         }
 
-        private void siftUp(int index0) {
-            int current = index0;
+        private void siftUp(int index) {
+            int current = index;
             while(current > 0) {
                 int parent = (current - 1) /2;
                 if (basket[current] <= basket[parent])
